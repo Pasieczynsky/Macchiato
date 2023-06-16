@@ -1,9 +1,8 @@
 package Expressions;
 
-import Instructions.Block;
-import Instructions.Instruction;
+import Instructions.BlockInstruction;
 
-public class Constant extends Expression {
+public class Constant extends Instruction {
 
     private final int value;
 
@@ -22,7 +21,7 @@ public class Constant extends Expression {
     }
 
     @Override
-    public int evaluate(Block parent, Instruction caller) {
+    public int evaluate(BlockInstruction parent, Instructions.Instruction caller) {
         return value;
     }
 

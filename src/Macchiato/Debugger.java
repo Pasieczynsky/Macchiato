@@ -1,18 +1,18 @@
 package Macchiato;
 
 import Exceptions.MacchiatoException;
-import Instructions.Block;
+import Instructions.BlockInstruction;
 
 import java.util.Scanner;
 
 public class Debugger {
     private final Scanner scanner = new Scanner(System.in);
-    private final Block program;
+    private final BlockInstruction program;
     private boolean working = true;
     boolean programFinished = false;
     private int number = 0;
 
-    public Debugger(Block program) {
+    public Debugger(BlockInstruction program) {
         this.program = program;
     }
 

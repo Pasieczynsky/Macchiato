@@ -1,45 +1,45 @@
 package Instructions;
 
 import Exceptions.MacchiatoException;
-import Expressions.Expression;
+import Expressions.Instruction;
 
-public class IfStatement implements Instruction {
-    private final Expression firstExpression;
-    private final Expression secondExpression;
+public class IfStatement implements Instructions.Instruction {
+    private final Instruction firstInstruction;
+    private final Instruction secondInstruction;
     private final String operator;
-    private final Instruction[] trueInstructions;
-    private final Instruction[] falseInstructions;
-    private Instruction[] instructions;
+    private final Instructions.Instruction[] trueInstructions;
+    private final Instructions.Instruction[] falseInstructions;
+    private Instructions.Instruction[] instructions;
     private int instructionIndex = -1;
 
-    public IfStatement(Expression firstExpression, Expression secondExpression, String operator, Instruction[] trueInstructions, Instruction[] falseInstructions) {
-        this.firstExpression = firstExpression;
-        this.secondExpression = secondExpression;
+    public IfStatement(Instruction firstInstruction, Instruction secondInstruction, String operator, Instructions.Instruction[] trueInstructions, Instructions.Instruction[] falseInstructions) {
+        this.firstInstruction = firstInstruction;
+        this.secondInstruction = secondInstruction;
         this.operator = operator;
         this.trueInstructions = trueInstructions;
         this.falseInstructions = falseInstructions;
     }
 
-    public IfStatement(Expression firstExpression, Expression secondExpression, String operator, Instruction[] trueInstructions) {
-        this.firstExpression = firstExpression;
-        this.secondExpression = secondExpression;
+    public IfStatement(Instruction firstInstruction, Instruction secondInstruction, String operator, Instructions.Instruction[] trueInstructions) {
+        this.firstInstruction = firstInstruction;
+        this.secondInstruction = secondInstruction;
         this.operator = operator;
         this.trueInstructions = trueInstructions;
         this.falseInstructions = null;
     }
 
     @Override
-    public void execute(Block parent) throws MacchiatoException {
+    public void execute(BlockInstruction parent) throws MacchiatoException {
         executeStatement(parent);
         if (instructions == null) return;
-        for (Instruction instruction : instructions) {
+        for (Instructions.Instruction instruction : instructions) {
             instruction.execute(parent);
         }
     }
 
-    private void executeStatement(Block parent) throws MacchiatoException {
-        int firstValue = firstExpression.evaluate(parent,this );
-        int secondValue = secondExpression.evaluate(parent,this );
+    private void executeStatement(BlockInstruction parent) throws MacchiatoException {
+        int firstValue = firstInstruction.evaluate(parent,this );
+        int secondValue = secondInstruction.evaluate(parent,this );
         boolean condition = switch (operator) {
             case "=" -> firstValue == secondValue;
             case "<>" -> firstValue != secondValue;
@@ -53,7 +53,7 @@ public class IfStatement implements Instruction {
     }
 
     @Override
-    public Boolean nextInstructionExecute(Block parent) throws MacchiatoException {
+    public Boolean nextInstructionExecute(BlockInstruction parent) throws MacchiatoException {
         if (instructionIndex == -1) {
             executeStatement(parent);
             if (instructions == null) return true;
@@ -70,16 +70,16 @@ public class IfStatement implements Instruction {
     }
 
     @Override
-    public void printNextInstruction(Block parent) {
+    public void printNextInstruction(BlockInstruction parent) {
         if (instructionIndex == -1) {
-            System.out.println("if " + firstExpression.toString() + " " + operator + " " + secondExpression.toString());
+            System.out.println("if " + firstInstruction.toString() + " " + operator + " " + secondInstruction.toString());
         } else {
             instructions[instructionIndex].printNextInstruction(parent);
         }
     }
 
     @Override
-    public void display(Block parent, int depth) {
+    public void display(BlockInstruction parent, int depth) {
         if (instructionIndex == -1) {
             parent.printVariables(depth);
         } else {

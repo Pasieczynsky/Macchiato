@@ -2,17 +2,16 @@ package Expressions;
 
 import Exceptions.DivideByZeroException;
 import Exceptions.MacchiatoException;
-import Instructions.Block;
-import Instructions.Instruction;
+import Instructions.BlockInstruction;
 
 public class Div extends Operator {
 
-    protected Div(Expression left, Expression right) {
+    protected Div(Instruction left, Instruction right) {
         super(left, right);
     }
 
     @Override
-    public int evaluate(Block parent, Instruction caller) throws MacchiatoException {
+    public int evaluate(BlockInstruction parent, Instructions.Instruction caller) throws MacchiatoException {
         int rightValue = right.evaluate(parent, caller);
         if (rightValue == 0) {
             throw new DivideByZeroException("\n " + caller.toString() + "\n" + parent.variablesToString(0));

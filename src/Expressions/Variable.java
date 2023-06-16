@@ -2,12 +2,11 @@ package Expressions;
 
 import Exceptions.MacchiatoException;
 import Exceptions.UndeclaredVariableException;
-import Instructions.Block;
-import Instructions.Instruction;
+import Instructions.BlockInstruction;
 
 import java.util.Map;
 
-public class Variable extends Expression {
+public class Variable extends Instruction {
     private final char name;
 
     public Variable(char name) {
@@ -15,9 +14,9 @@ public class Variable extends Expression {
     }
 
     @Override
-    public int evaluate(Block parent, Instruction caller) throws MacchiatoException {
+    public int evaluate(BlockInstruction parent, Instructions.Instruction caller) throws MacchiatoException {
         Map<Character, Integer> variables = parent.getVariables();
-        Block tmp;
+        BlockInstruction tmp;
         for (tmp = parent; tmp != null && !variables.containsKey(this.name); variables = tmp.getVariables()) {
             tmp = tmp.getParent();
         }

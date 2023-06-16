@@ -1,17 +1,16 @@
 package Expressions;
 
 import Exceptions.MacchiatoException;
-import Instructions.Block;
-import Instructions.Instruction;
+import Instructions.BlockInstruction;
 
 public class Add extends Operator {
 
-    protected Add(Expression left, Expression right) {
+    protected Add(Instruction left, Instruction right) {
         super(left, right);
     }
 
     @Override
-    public int evaluate(Block parent, Instruction caller) throws MacchiatoException {
+    public int evaluate(BlockInstruction parent, Instructions.Instruction caller) throws MacchiatoException {
         return left.evaluate(parent, caller) + right.evaluate(parent, caller);
     }
 

@@ -1,12 +1,12 @@
 package Macchiato;
 
 import Exceptions.MacchiatoException;
-import Instructions.Block;
+import Instructions.BlockInstruction;
 
 public class Macchiato {
-    private final Block program;
+    private final BlockInstruction program;
 
-    public Macchiato(Block program) {
+    public Macchiato(BlockInstruction program) {
         this.program = program;
     }
     public void run(){

@@ -1,30 +1,36 @@
 package Instructions;
 
 import Exceptions.MacchiatoException;
+import Exceptions.UndeclaredProcedureException;
 
 import java.util.*;
 
-public class Block implements Instruction {
+public class BlockInstruction implements Instruction {
 
     private final VariableDeclaration[] variableDeclarations;
     private final Instruction[] instructions;
+    private ArrayList<ProcedureDeclaration> procedures = new ArrayList<>();
     private final Map<Character, Integer> variables = new HashMap<>();
-    private Block parent;
+    private BlockInstruction parent;
     private int variableDeclarationIndex = -1;
     private int instructionIndex = 0;
 
 
-    public Block(VariableDeclaration[] variableDeclarations, Instruction[] instructions) {
+    public BlockInstruction(VariableDeclaration[] variableDeclarations, Instruction[] instructions) {
         this.variableDeclarations = variableDeclarations;
         this.instructions = instructions;
     }
 
-    protected void setParent(Block parent) {
+
+    protected void setParent(BlockInstruction parent) {
         this.parent = parent;
+    }
+    public void addProcedure(ProcedureDeclaration procedureDeclaration){
+        procedures.add(procedureDeclaration);
     }
 
     @Override
-    public void execute(Block parent) throws MacchiatoException {
+    public void execute(BlockInstruction parent) throws MacchiatoException {
         setParent(parent);
         for (VariableDeclaration variableDeclaration : variableDeclarations) {
             variableDeclaration.execute(this);
@@ -41,7 +47,7 @@ public class Block implements Instruction {
     }
 
     @Override
-    public Boolean nextInstructionExecute(Block parent) throws MacchiatoException {
+    public Boolean nextInstructionExecute(BlockInstruction parent) throws MacchiatoException {
         if (parent != this.parent)
             setParent(parent);
         if (variableDeclarationIndex == -1) {
@@ -73,7 +79,7 @@ public class Block implements Instruction {
         variables.clear();
     }
 
-    public void printNextInstruction(Block parent) {
+    public void printNextInstruction(BlockInstruction parent) {
         if (variableDeclarationIndex == -1) {
             System.out.println("Begin block");
             return;
@@ -90,7 +96,7 @@ public class Block implements Instruction {
     }
 
     @Override
-    public void display(Block parent, int depth) {
+    public void display(BlockInstruction parent, int depth) {
         if (variableDeclarationIndex == -1) {
             parent.printVariables(depth);
             return;
@@ -111,7 +117,7 @@ public class Block implements Instruction {
         return variables;
     }
 
-    public Block getParent() {
+    public BlockInstruction getParent() {
         return parent;
     }
 
@@ -120,7 +126,7 @@ public class Block implements Instruction {
     }
 
     public String variablesToString(int depth) {
-        Block tmp = this;
+        BlockInstruction tmp = this;
         while (depth > 0) {
             tmp = tmp.getParent();
             depth--;
@@ -136,5 +142,19 @@ public class Block implements Instruction {
             }
         }
         return variablesToPrint.toString();
+    }
+
+    public ProcedureDeclaration getProcedure(String procedureName) throws UndeclaredProcedureException {
+        for (ProcedureDeclaration procedureDeclaration : procedures) {
+            if (procedureDeclaration.getProcedureName().equals(procedureName)) {
+                return procedureDeclaration;
+            }
+        }
+        //szukanie w bloku nadrzednym
+        if (parent != null) {
+            return parent.getProcedure(procedureName);
+        }
+        throw new UndeclaredProcedureException(procedureName);
+
     }
 }

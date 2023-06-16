@@ -2,23 +2,23 @@ package Instructions;
 
 import Exceptions.MacchiatoException;
 import Exceptions.UndeclaredVariableException;
-import Expressions.Expression;
+import Expressions.Instruction;
 
 import java.util.Map;
 
-public class VariableAssignment implements Instruction {
+public class VariableAssignment implements Instructions.Instruction {
     private final char variable;
-    private final Expression expression;
+    private final Instruction instruction;
 
-    public VariableAssignment(char variable, Expression expression) {
+    public VariableAssignment(char variable, Instruction instruction) {
         this.variable = variable;
-        this.expression = expression;
+        this.instruction = instruction;
     }
 
     @Override
-    public void execute(Block parent) throws MacchiatoException {
+    public void execute(BlockInstruction parent) throws MacchiatoException {
         Map<Character, Integer> variables = null;
-        Block tmp;
+        BlockInstruction tmp;
         for(tmp = parent; tmp != null; tmp = tmp.getParent()) {
             variables = tmp.getVariables();
             if (variables.containsKey(variable)) {
@@ -28,27 +28,27 @@ public class VariableAssignment implements Instruction {
         if(tmp == null){
             throw new UndeclaredVariableException("\n " + this + "\n " + parent.variablesToString(0));
         }
-        int value = expression.evaluate(parent, this);
+        int value = instruction.evaluate(parent, this);
         variables.replace(variable, value);
     }
 
     @Override
-    public Boolean nextInstructionExecute(Block parent) throws MacchiatoException{
+    public Boolean nextInstructionExecute(BlockInstruction parent) throws MacchiatoException{
         execute(parent);
         return true;
     }
 
     @Override
-    public void printNextInstruction(Block parent) {
+    public void printNextInstruction(BlockInstruction parent) {
         System.out.println(this);
     }
 
     @Override
     public String toString() {
-        return (variable + " := " + expression.toString());
+        return (variable + " := " + instruction.toString());
     }
     @Override
-    public void display(Block parent, int depth) {
+    public void display(BlockInstruction parent, int depth) {
         parent.printVariables(depth);
     }
 }

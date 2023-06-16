@@ -2,37 +2,37 @@ package Instructions;
 
 import Exceptions.MacchiatoException;
 import Expressions.Constant;
-import Expressions.Expression;
+import Expressions.Instruction;
 
-public class ForLoop implements Instruction {
+public class ForLoop implements Instructions.Instruction {
     private final char variable;
-    private final Expression expression;
-    private final Instruction[] instructions;
+    private final Instruction instruction;
+    private final Instructions.Instruction[] instructions;
     private int instructionIndex = 0;
     private int iterations = 0;
     private int loopCounter = 0;
-    private Instruction overwritingVariable;
+    private Instructions.Instruction overwritingVariable;
 
-    public ForLoop(char variable, Expression expression, Instruction[] instructions) {
+    public ForLoop(char variable, Instruction instruction, Instructions.Instruction[] instructions) {
         this.variable = variable;
-        this.expression = expression;
+        this.instruction = instruction;
         this.instructions = instructions;
     }
 
     @Override
-    public void execute(Block parent) throws MacchiatoException {
-        int iterations = expression.evaluate(parent, this);
+    public void execute(BlockInstruction parent) throws MacchiatoException {
+        int iterations = instruction.evaluate(parent, this);
         if (iterations <= 0) {
             return;
         }
         for (int i = 0; i < iterations; i++) {
-            Block forLoop = new Block(new VariableDeclaration[]{(new VariableDeclaration(variable, Constant.create(i)))}, instructions);
+            BlockInstruction forLoop = new BlockInstruction(new VariableDeclaration[]{(new VariableDeclaration(variable, Constant.create(i)))}, instructions);
             forLoop.execute(parent);
         }
     }
 
     @Override
-    public Boolean nextInstructionExecute(Block parent) throws MacchiatoException {
+    public Boolean nextInstructionExecute(BlockInstruction parent) throws MacchiatoException {
         if (iterations == 0) {
             return forInitialization(parent);
         }
@@ -57,8 +57,8 @@ public class ForLoop implements Instruction {
         return false;
     }
 
-    private Boolean forInitialization(Block parent) throws MacchiatoException {
-        iterations = expression.evaluate(parent, this);
+    private Boolean forInitialization(BlockInstruction parent) throws MacchiatoException {
+        iterations = instruction.evaluate(parent, this);
         if (iterations <= 0) {
             return true;
         }
@@ -72,9 +72,9 @@ public class ForLoop implements Instruction {
     }
 
     @Override
-    public void printNextInstruction(Block parent) {
+    public void printNextInstruction(BlockInstruction parent) {
         if (iterations == 0) {
-            System.out.println("for " + variable + " in " + expression.toString() + "{");
+            System.out.println("for " + variable + " in " + instruction.toString() + "{");
             return;
         }
         if (instructionIndex < instructions.length) {
@@ -83,7 +83,7 @@ public class ForLoop implements Instruction {
     }
 
     @Override
-    public void display(Block parent, int depth) {
+    public void display(BlockInstruction parent, int depth) {
         if (iterations == 0) {
             parent.printVariables(depth);
             return;

@@ -1,33 +1,33 @@
 package Instructions;
 
 import Exceptions.MacchiatoException;
-import Expressions.Expression;
+import Expressions.Instruction;
 
-public class Print implements Instruction{
-    private final Expression expression;
+public class Print implements Instructions.Instruction {
+    private final Instruction instruction;
 
-    public Print(Expression expression) {
-        this.expression = expression;
+    public Print(Instruction instruction) {
+        this.instruction = instruction;
     }
 
     @Override
-    public void execute(Block parent) throws MacchiatoException {
-        int value = expression.evaluate(parent,this );
+    public void execute(BlockInstruction parent) throws MacchiatoException {
+        int value = instruction.evaluate(parent,this );
         System.out.println(value);
     }
     @Override
-    public Boolean nextInstructionExecute(Block parent) throws MacchiatoException {
+    public Boolean nextInstructionExecute(BlockInstruction parent) throws MacchiatoException {
         execute(parent);
         return true;
     }
 
     @Override
-    public void printNextInstruction(Block parent) {
-        System.out.println("print " + expression.toString());
+    public void printNextInstruction(BlockInstruction parent) {
+        System.out.println("print " + instruction.toString());
     }
 
     @Override
-    public void display(Block parent, int depth) {
+    public void display(BlockInstruction parent, int depth) {
         parent.printVariables(depth);
     }
 }
