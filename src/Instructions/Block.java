@@ -3,6 +3,7 @@ package Instructions;
 import Exceptions.MacchiatoException;
 import Exceptions.UndeclaredProcedureException;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -196,4 +197,39 @@ public abstract class Block implements Instruction{
         throw new UndeclaredProcedureException(procedureName);
 
     }
+    private String proceduresToString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (ProcedureDeclaration procedureDeclaration : procedures) {
+            stringBuilder.append(procedureDeclaration.toString());
+            stringBuilder.append(", ");
+        }
+        if(parent != null)
+            stringBuilder.append(parent.proceduresToString());
+        //usuwamy ostatni przecinek
+        stringBuilder.deleteCharAt(stringBuilder.length() - 2);
+        return stringBuilder.toString();
+    }
+
+    public void dump(String path) {
+        try {
+            PrintWriter writer = new PrintWriter(path, "UTF-8");
+            writer.println("Procedures: \n" + proceduresToString());
+            String variables = displayToString();
+            writer.println("Variables: \n" + variables);
+            writer.close();
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+    private String displayToString(){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        PrintStream old = System.out;
+        System.setOut(ps);
+        display(parent, 0);
+        System.out.flush();
+        System.setOut(old);
+        return baos.toString();
+    }
+
 }

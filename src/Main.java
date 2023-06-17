@@ -6,7 +6,8 @@ import Macchiato.Macchiato;
 public class Main {
     public static void main(String[] args) {
 //        example();
-        procedureExample();
+//        procedureExample();
+        procedureExample2();
     }
     public static void example(){
         BlockInstruction main = new BlockInstruction(
@@ -107,7 +108,12 @@ public class Main {
                                         new Instructions.Instruction[]{
                                                 new Print(new Variable('b').add(new Variable('x'))),
                                                 new Print(new Variable('a').add(new Variable('x')))})),
-//                                new Instruction[]{new Print(new Variable('a').add(new Variable('x')))}),
+                        new ProcedureDeclaration("outn", new char[]{'a', 'b'},
+                                new ProcedureBlock(
+                                        new VariableDeclaration[]{},
+                                        new Instructions.Instruction[]{
+                                                new Print(new Variable('b').add(new Variable('x'))),
+                                                new Print(new Variable('a').add(new Variable('x')))})),
                         new VariableAssignment('x', new Variable('x').sub(new Variable('y'))),
                         new ProcedureInvoke("out", new Instruction[]{new Variable('x'), Constant.create(300)}),
                         new ProcedureInvoke("out", new Instruction[]{Constant.create(100),Constant.create(200)}),

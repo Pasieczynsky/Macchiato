@@ -89,4 +89,8 @@ public class ProcedureDeclaration implements Instruction{
     public char [] getParameters(){
         return parameters;
     }
+    @Override
+    public String toString(){
+        return "Procedure: " + name + " (" + getParametersString() + ")";
+    }
 }
