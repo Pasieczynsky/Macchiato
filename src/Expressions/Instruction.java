@@ -1,11 +1,11 @@
 package Expressions;
 
 import Exceptions.MacchiatoException;
-import Instructions.BlockInstruction;
+import Instructions.Block;
 
 public abstract class Instruction {
 
-    public abstract int evaluate(BlockInstruction parent, Instructions.Instruction caller) throws MacchiatoException;
+    public abstract int evaluate(Block parent, Instructions.Instruction caller) throws MacchiatoException;
 
     @Override
     public String toString() {

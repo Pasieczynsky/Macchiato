@@ -16,9 +16,9 @@ public class VariableAssignment implements Instructions.Instruction {
     }
 
     @Override
-    public void execute(BlockInstruction parent) throws MacchiatoException {
+    public void execute(Block parent) throws MacchiatoException {
         Map<Character, Integer> variables = null;
-        BlockInstruction tmp;
+        Block tmp;
         for(tmp = parent; tmp != null; tmp = tmp.getParent()) {
             variables = tmp.getVariables();
             if (variables.containsKey(variable)) {
@@ -33,13 +33,13 @@ public class VariableAssignment implements Instructions.Instruction {
     }
 
     @Override
-    public Boolean nextInstructionExecute(BlockInstruction parent) throws MacchiatoException{
+    public Boolean nextInstructionExecute(Block parent) throws MacchiatoException{
         execute(parent);
         return true;
     }
 
     @Override
-    public void printNextInstruction(BlockInstruction parent) {
+    public void printNextInstruction(Block parent) {
         System.out.println(this);
     }
 
@@ -48,7 +48,7 @@ public class VariableAssignment implements Instructions.Instruction {
         return (variable + " := " + instruction.toString());
     }
     @Override
-    public void display(BlockInstruction parent, int depth) {
+    public void display(Block parent, int depth) {
         parent.printVariables(depth);
     }
 }

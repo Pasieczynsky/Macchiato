@@ -29,7 +29,7 @@ public class IfStatement implements Instructions.Instruction {
     }
 
     @Override
-    public void execute(BlockInstruction parent) throws MacchiatoException {
+    public void execute(Block parent) throws MacchiatoException {
         executeStatement(parent);
         if (instructions == null) return;
         for (Instructions.Instruction instruction : instructions) {
@@ -37,7 +37,7 @@ public class IfStatement implements Instructions.Instruction {
         }
     }
 
-    private void executeStatement(BlockInstruction parent) throws MacchiatoException {
+    private void executeStatement(Block parent) throws MacchiatoException {
         int firstValue = firstInstruction.evaluate(parent,this );
         int secondValue = secondInstruction.evaluate(parent,this );
         boolean condition = switch (operator) {
@@ -53,7 +53,7 @@ public class IfStatement implements Instructions.Instruction {
     }
 
     @Override
-    public Boolean nextInstructionExecute(BlockInstruction parent) throws MacchiatoException {
+    public Boolean nextInstructionExecute(Block parent) throws MacchiatoException {
         if (instructionIndex == -1) {
             executeStatement(parent);
             if (instructions == null) return true;
@@ -70,7 +70,7 @@ public class IfStatement implements Instructions.Instruction {
     }
 
     @Override
-    public void printNextInstruction(BlockInstruction parent) {
+    public void printNextInstruction(Block parent) {
         if (instructionIndex == -1) {
             System.out.println("if " + firstInstruction.toString() + " " + operator + " " + secondInstruction.toString());
         } else {
@@ -79,7 +79,7 @@ public class IfStatement implements Instructions.Instruction {
     }
 
     @Override
-    public void display(BlockInstruction parent, int depth) {
+    public void display(Block parent, int depth) {
         if (instructionIndex == -1) {
             parent.printVariables(depth);
         } else {

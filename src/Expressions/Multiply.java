@@ -1,7 +1,7 @@
 package Expressions;
 
 import Exceptions.MacchiatoException;
-import Instructions.BlockInstruction;
+import Instructions.Block;
 
 public class Multiply extends Operator {
 
@@ -10,7 +10,7 @@ public class Multiply extends Operator {
     }
 
     @Override
-    public int evaluate(BlockInstruction parent, Instructions.Instruction caller) throws MacchiatoException {
+    public int evaluate(Block parent, Instructions.Instruction caller) throws MacchiatoException {
         return left.evaluate(parent, caller) * right.evaluate(parent, caller);
     }
 

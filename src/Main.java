@@ -50,10 +50,10 @@ public class Main {
 //    x := x - y
 //    out(x)
 //    out(100)  // tu powinno wypisać 200
-//    begin block
-//    var x 10
-//    out(100) // tu statycznie wciąż 200, dynamicznie 110
-//    end block
+//      begin block
+//      var x 10
+//      out(100) // tu statycznie wciąż 200, dynamicznie 110
+//      end block
 //    end block
 //    mogłoby przebiegać na przykład tak:
 //
@@ -79,7 +79,7 @@ public class Main {
                         new VariableDeclaration('y', Constant.create(1))},
                 new Instructions.Instruction[]{
                         new ProcedureDeclaration("out", new char[]{'a'},
-                                new BlockInstruction(
+                                new ProcedureBlock(
                                         new VariableDeclaration[]{},
                                         new Instructions.Instruction[]{new Print(new Variable('a').add(new Variable('x')))})),
 //                                new Instruction[]{new Print(new Variable('a').add(new Variable('x')))}),
@@ -95,7 +95,30 @@ public class Main {
         Macchiato program = new Macchiato(main);
 //        program.run();
         program.debug();
+    }
+    public static void procedureExample2(){
+        BlockInstruction main = new BlockInstruction(
+                new VariableDeclaration[]{new VariableDeclaration('x', Constant.create(101)),
+                        new VariableDeclaration('y', Constant.create(1))},
+                new Instructions.Instruction[]{
+                        new ProcedureDeclaration("out", new char[]{'a', 'b'},
+                                new ProcedureBlock(
+                                        new VariableDeclaration[]{},
+                                        new Instructions.Instruction[]{
+                                                new Print(new Variable('b').add(new Variable('x'))),
+                                                new Print(new Variable('a').add(new Variable('x')))})),
+//                                new Instruction[]{new Print(new Variable('a').add(new Variable('x')))}),
+                        new VariableAssignment('x', new Variable('x').sub(new Variable('y'))),
+                        new ProcedureInvoke("out", new Instruction[]{new Variable('x'), Constant.create(300)}),
+                        new ProcedureInvoke("out", new Instruction[]{Constant.create(100),Constant.create(200)}),
+                        new BlockInstruction(
+                                new VariableDeclaration[]{new VariableDeclaration('x', Constant.create(10))},
+                                new Instructions.Instruction[]{new ProcedureInvoke("out", new Instruction[]{Constant.create(100), Constant.create(400)})})
+                }
+        );
 
-
+        Macchiato program = new Macchiato(main);
+//        program.run();
+        program.debug();
     }
 }

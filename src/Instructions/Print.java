@@ -11,23 +11,23 @@ public class Print implements Instructions.Instruction {
     }
 
     @Override
-    public void execute(BlockInstruction parent) throws MacchiatoException {
+    public void execute(Block parent) throws MacchiatoException {
         int value = instruction.evaluate(parent,this );
         System.out.println(value);
     }
     @Override
-    public Boolean nextInstructionExecute(BlockInstruction parent) throws MacchiatoException {
+    public Boolean nextInstructionExecute(Block parent) throws MacchiatoException {
         execute(parent);
         return true;
     }
 
     @Override
-    public void printNextInstruction(BlockInstruction parent) {
+    public void printNextInstruction(Block parent) {
         System.out.println("print " + instruction.toString());
     }
 
     @Override
-    public void display(BlockInstruction parent, int depth) {
+    public void display(Block parent, int depth) {
         parent.printVariables(depth);
     }
 }

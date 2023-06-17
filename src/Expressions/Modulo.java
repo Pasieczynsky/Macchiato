@@ -1,7 +1,7 @@
 package Expressions;
 
 import Exceptions.MacchiatoException;
-import Instructions.BlockInstruction;
+import Instructions.Block;
 
 public class Modulo extends Operator {
 
@@ -10,7 +10,7 @@ public class Modulo extends Operator {
     }
 
     @Override
-    public int evaluate(BlockInstruction parent, Instructions.Instruction caller) throws MacchiatoException {
+    public int evaluate(Block parent, Instructions.Instruction caller) throws MacchiatoException {
         int rightValue = right.evaluate(parent, caller);
         if (rightValue == 0) {
             throw new Exceptions.DivideByZeroException("\n " + caller.toString() + "\n" + parent.variablesToString(0));

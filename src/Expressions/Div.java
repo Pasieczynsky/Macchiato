@@ -2,7 +2,7 @@ package Expressions;
 
 import Exceptions.DivideByZeroException;
 import Exceptions.MacchiatoException;
-import Instructions.BlockInstruction;
+import Instructions.Block;
 
 public class Div extends Operator {
 
@@ -11,7 +11,7 @@ public class Div extends Operator {
     }
 
     @Override
-    public int evaluate(BlockInstruction parent, Instructions.Instruction caller) throws MacchiatoException {
+    public int evaluate(Block parent, Instructions.Instruction caller) throws MacchiatoException {
         int rightValue = right.evaluate(parent, caller);
         if (rightValue == 0) {
             throw new DivideByZeroException("\n " + caller.toString() + "\n" + parent.variablesToString(0));

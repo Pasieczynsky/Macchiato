@@ -38,29 +38,29 @@ import Exceptions.MacchiatoException;
 public class ProcedureDeclaration implements Instruction{
     private String name;
     private char [] parameters;
-    private BlockInstruction definition;
+    private ProcedureBlock definition;
 
-    public ProcedureDeclaration(String name, char [] parameters, BlockInstruction blockInstruction){
+    public ProcedureDeclaration(String name, char [] parameters, ProcedureBlock blockInstruction){
         this.name = name;
         this.parameters = parameters;
         this.definition = blockInstruction;
     }
 
     @Override
-    public void execute(BlockInstruction parent) throws MacchiatoException {
+    public void execute(Block parent) throws MacchiatoException {
         parent.addProcedure(this);
     }
     public String getName(){
         return name;
     }
     @Override
-    public Boolean nextInstructionExecute(BlockInstruction parent) throws MacchiatoException {
+    public Boolean nextInstructionExecute(Block parent) throws MacchiatoException {
         execute(parent);
         return true;
     }
 
     @Override
-    public void printNextInstruction(BlockInstruction parent) {
+    public void printNextInstruction(Block parent) {
         String params = getParametersString();
         System.out.println("Proc " + name + " (" + params  + ")" );
     }
@@ -76,14 +76,14 @@ public class ProcedureDeclaration implements Instruction{
         return params.toString();
     }
     @Override
-    public void display(BlockInstruction parent, int depth) {
+    public void display(Block parent, int depth) {
         parent.printVariables(depth);
     }
 
     public String getProcedureName() {
         return name;
     }
-    public BlockInstruction getProcedureDefinition(){
+    public ProcedureBlock getProcedureDefinition(){
         return definition;
     }
     public char [] getParameters(){
