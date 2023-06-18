@@ -37,8 +37,8 @@ public class ExpressionsTest {
                 .build();
         program.run();
         assertEquals("""
-                6\r
-                x = 1\r
+                6
+                x = 1
                 """, outContent.toString());
     }
     @Test
@@ -47,7 +47,7 @@ public class ExpressionsTest {
                 .declareVariable('x', Constant.create(1))
                 .build();
         program.run();
-        assertEquals("x = 1\r\n", outContent.toString());
+        assertEquals("x = 1\n", outContent.toString());
     }
     @Test
     public void testDiv() {
@@ -57,8 +57,8 @@ public class ExpressionsTest {
                 .build();
         program.run();
         assertEquals("""
-                2\r
-                x = 10\r
+                2
+                x = 10
                 """, outContent.toString());
     }
     @Test
@@ -69,8 +69,8 @@ public class ExpressionsTest {
                 .build();
         program.run();
         assertEquals("""
-                0\r
-                x = 10\r
+                0
+                x = 10
                 """, outContent.toString());
     }
     @Test
@@ -81,8 +81,8 @@ public class ExpressionsTest {
                 .build();
         program.run();
         assertEquals("""
-                50\r
-                x = 10\r
+                50
+                x = 10
                 """, outContent.toString());
     }
     @Test
@@ -93,8 +93,8 @@ public class ExpressionsTest {
                 .build();
         program.run();
         assertEquals("""
-                5\r
-                x = 10\r
+                5
+                x = 10
                 """, outContent.toString());
     }
     @Test
@@ -105,8 +105,8 @@ public class ExpressionsTest {
                 .build();
         program.run();
         assertEquals("""
-                x = 1\r
-                y = 1\r
+                x = 1
+                y = 1
                 """, outContent.toString());
     }
 }

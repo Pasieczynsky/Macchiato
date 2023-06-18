@@ -41,9 +41,9 @@ class ForLoopTest {
         program.run();
         StringBuilder expected = new StringBuilder();
         for (int i = 0; i < 10; i++) {
-            expected.append(i + 1).append("\r\n");
+            expected.append(i + 1).append("\n");
         }
-        expected.append("x = 1\r\n");
+        expected.append("x = 1\n");
         assertEquals(expected.toString(), outContent.toString());
     }
 

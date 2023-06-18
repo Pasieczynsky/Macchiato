@@ -45,9 +45,9 @@ class ProcedureInvokeTest {
                 .build();
         program.run();
         assertEquals("""
-                100\r
-                x = 99\r
-                y = 1\r
+                100
+                x = 99
+                y = 1
                 """, outContent.toString());
     }
 

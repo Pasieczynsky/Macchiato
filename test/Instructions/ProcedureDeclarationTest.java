@@ -46,7 +46,7 @@ class ProcedureDeclarationTest {
         program.run();
         assertEquals("""
                 Exception: Exceptions.ProcedureRedeclarationException: Procedure: out (b)
-                {x=1}\r
+                {x=1}
                 """, outContent.toString());
     }
 

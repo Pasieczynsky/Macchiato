@@ -42,9 +42,9 @@ class VariableAssignmentTest {
                 .build();
         program.run();
         assertEquals("""
-                1\r
-                x = 1\r
-                y = 1\r
+                1
+                x = 1
+                y = 1
                 """, outContent.toString());
     }
 
@@ -56,7 +56,7 @@ class VariableAssignmentTest {
                 .assignVariable('z', new Variable('y'))
                 .build();
         program.run();
-        assertEquals("Exception: Exceptions.UndeclaredVariableException: \n z := y\n {x=99, y=1}\r\n", outContent.toString());
+        assertEquals("Exception: Exceptions.UndeclaredVariableException: \n z := y\n {x=99, y=1}\n", outContent.toString());
     }
 
 }

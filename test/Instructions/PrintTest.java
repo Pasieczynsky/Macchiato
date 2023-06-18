@@ -38,8 +38,8 @@ class PrintTest {
                 .build();
         program.run();
         assertEquals("""
-                1\r
-                x = 1\r
+                1
+                x = 1
                 """, outContent.toString());
     }
 

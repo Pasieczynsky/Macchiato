@@ -14,7 +14,6 @@ public class VariableAssignment implements Instruction {
         this.variable = variable;
         this.expression = expression;
     }
-
     @Override
     public void execute(Block parent) throws MacchiatoException {
         Map<Character, Integer> variables = null;

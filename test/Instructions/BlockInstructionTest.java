@@ -42,8 +42,8 @@ class BlockInstructionTest {
                 .build();
         program.run();
         assertEquals("""
-                3\r
-                x = 1\r
+                3
+                x = 1
                 """, outContent.toString());
     }
 

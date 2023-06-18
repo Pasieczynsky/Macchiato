@@ -46,9 +46,9 @@ class IfStatementTest {
                 .build();
         program.run();
         assertEquals("""
-                2\r
-                x = 5\r
-                y = 3\r
+                2
+                x = 5
+                y = 3
                 """, outContent.toString());
     }
     @Test
@@ -67,9 +67,9 @@ class IfStatementTest {
                 .build();
         program.run();
         assertEquals("""
-                6\r
-                x = 3\r
-                y = 3\r
+                6
+                x = 3
+                y = 3
                 """, outContent.toString());
     }
     @Test
@@ -88,9 +88,9 @@ class IfStatementTest {
                 .build();
         program.run();
         assertEquals("""
-                7\r
-                x = 2\r
-                y = 5\r
+                7
+                x = 2
+                y = 5
                 """, outContent.toString());
     }
     @Test
@@ -109,9 +109,9 @@ class IfStatementTest {
                 .build();
         program.run();
         assertEquals("""
-                0\r
-                x = 5\r
-                y = 5\r
+                0
+                x = 5
+                y = 5
                 """, outContent.toString());
     }
     @Test
@@ -130,9 +130,9 @@ class IfStatementTest {
                 .build();
         program.run();
         assertEquals("""
-                9\r
-                x = 6\r
-                y = 3\r
+                9
+                x = 6
+                y = 3
                 """, outContent.toString());
     }
     @Test
@@ -151,9 +151,9 @@ class IfStatementTest {
                 .build();
         program.run();
         assertEquals("""
-                -6\r
-                x = 6\r
-                y = 12\r
+                -6
+                x = 6
+                y = 12
                 """, outContent.toString());
     }
     @Test
@@ -172,9 +172,9 @@ class IfStatementTest {
                 .build();
         program.run();
         assertEquals("""
-                12\r
-                x = 6\r
-                y = 6\r
+                12
+                x = 6
+                y = 6
                 """, outContent.toString());
     }
     @Test
@@ -193,9 +193,9 @@ class IfStatementTest {
                 .build();
         program.run();
         assertEquals("""
-                -1\r
-                x = 6\r
-                y = 7\r
+                -1
+                x = 6
+                y = 7
                 """, outContent.toString());
     }
     @Test
@@ -214,9 +214,9 @@ class IfStatementTest {
                 .build();
         program.run();
         assertEquals("""
-                12\r
-                x = 6\r
-                y = 6\r
+                12
+                x = 6
+                y = 6
                 """, outContent.toString());
     }
     @Test
@@ -235,9 +235,9 @@ class IfStatementTest {
                 .build();
         program.run();
         assertEquals("""
-                1\r
-                x = 7\r
-                y = 6\r
+                1
+                x = 7
+                y = 6
                 """, outContent.toString());
     }
 }

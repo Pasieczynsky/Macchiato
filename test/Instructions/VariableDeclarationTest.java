@@ -35,7 +35,7 @@ class VariableDeclarationTest {
                 .declareVariable('x', Constant.create(1))
                 .build();
         program.run();
-        assertEquals("x = 1\r\n", outContent.toString());
+        assertEquals("x = 1\n", outContent.toString());
     }
     @Test
     public void testVariableRedeclaration() {
@@ -44,7 +44,7 @@ class VariableDeclarationTest {
                 .declareVariable('x', Constant.create(1))
                 .build();
         program.run();
-        assertEquals("Exception: Exceptions.VariableRedeclarationException: \n var x = 1\n{x=99}\r\n", outContent.toString());
+        assertEquals("Exception: Exceptions.VariableRedeclarationException: \n var x = 1\n{x=99}\n", outContent.toString());
     }
 
 }
