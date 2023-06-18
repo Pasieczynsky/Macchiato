@@ -1,11 +1,10 @@
 import Expressions.*;
-import Instructions.BlockInstruction;
 import Macchiato.Macchiato;
 import ProgramBuilder.*;
 
 public class Main {
     public static void main(String[] args) {
-        example();
+//        example();
         procedure();
     }
 
@@ -52,7 +51,7 @@ public class Main {
                         .build()
                 )
                 .assignVariable('x', new Variable('x').sub(new Variable('y')))
-                .invoke("out", new Expression[]{new Variable('x')})
+                .invoke("out", new Expression[]{new Variable('x'), new Variable('y')})
                 .invoke("out", new Expression[]{Constant.create(100)})
                 .block(new BlockInstructionBuilder()
                         .declareVariable('x', Constant.create(10))

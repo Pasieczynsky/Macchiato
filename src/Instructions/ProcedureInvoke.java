@@ -1,6 +1,7 @@
 package Instructions;
 
 import Exceptions.MacchiatoException;
+import Exceptions.WrongNumberOfArgumentsException;
 import Expressions.Expression;
 
 import java.util.ArrayList;
@@ -18,7 +19,9 @@ public class ProcedureInvoke implements Instruction {
 
     private void checkArguments(ProcedureDeclaration procedure) throws MacchiatoException {
         if (arguments.length != procedure.getParameters().length) {
-            throw new MacchiatoException("Wrong number of arguments");
+            throw new WrongNumberOfArgumentsException("Procedure: " + procedureName
+                    + " Expected number of arguments: " + procedure.getParameters().length
+                    + " Given number of arguments: " + arguments.length);
         }
     }
 
