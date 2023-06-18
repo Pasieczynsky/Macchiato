@@ -1,10 +1,11 @@
 package Instructions;
 
-import Exceptions.MacchiatoException;
+
+import java.util.ArrayList;
 
 public class ProcedureBlock extends Block{
 
-    public ProcedureBlock(VariableDeclaration[] variableDeclarations, Instruction[] instructions) {
+    public ProcedureBlock(ArrayList<VariableDeclaration> variableDeclarations, ArrayList<Instruction> instructions) {
         super(variableDeclarations, instructions);
     }
 

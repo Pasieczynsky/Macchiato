@@ -6,7 +6,7 @@ import Instructions.Block;
 
 public class Div extends Operator {
 
-    protected Div(Instruction left, Instruction right) {
+    protected Div(Expression left, Expression right) {
         super(left, right);
     }
 

@@ -1,14 +1,16 @@
 package Instructions;
 
 import Exceptions.MacchiatoException;
-import Expressions.Instruction;
+import Expressions.Expression;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProcedureInvoke implements Instructions.Instruction {
     private final String procedureName;
-    private final Instruction[] arguments;
+    private final Expression[] arguments;
     private ProcedureBlock procedureBlockInstruction = null;
-//    private int instructionIndex = -1;
-    public ProcedureInvoke(String procedureName, Instruction[] arguments){
+    public ProcedureInvoke(String procedureName, Expression[] arguments){
         this.procedureName = procedureName;
         this.arguments = arguments;
     }
@@ -19,21 +21,15 @@ public class ProcedureInvoke implements Instructions.Instruction {
     }
     private void makeProcedureBlock(Block parent, ProcedureDeclaration procedure) throws MacchiatoException{
         checkArguments(parent,procedure);
-        VariableDeclaration [] parameters = new VariableDeclaration[arguments.length];
+        ArrayList<VariableDeclaration> parameters = new ArrayList<>();
         for(int i = 0; i < arguments.length; i++){
-            parameters[i] = new VariableDeclaration(procedure.getParameters()[i], arguments[i]);
+            parameters.add(new VariableDeclaration(procedure.getParameters()[i], arguments[i]));
         }
-        procedureBlockInstruction = new ProcedureBlock(parameters, new ProcedureBlock[]{procedure.getProcedureDefinition()});
+        procedureBlockInstruction = new ProcedureBlock(parameters, new ArrayList<>(List.of(procedure.getProcedureDefinition())));
     }
     @Override
     public void execute(Block parent) throws MacchiatoException {
-        ProcedureDeclaration procedure = parent.getProcedure(procedureName);
-        makeProcedureBlock(parent,procedure);
-        VariableDeclaration [] parameters = new VariableDeclaration[arguments.length];
-        for(int i = 0; i < arguments.length; i++){
-            parameters[i] = new VariableDeclaration(procedure.getParameters()[i], arguments[i]);
-        }
-        procedureBlockInstruction = new ProcedureBlock(parameters, new ProcedureBlock[]{procedure.getProcedureDefinition()});
+        makeProcedureBlock(parent, parent.getProcedure(procedureName));
         procedureBlockInstruction.execute(parent);
     }
 

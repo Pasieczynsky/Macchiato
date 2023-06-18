@@ -3,7 +3,7 @@ package Expressions;
 import Exceptions.MacchiatoException;
 import Instructions.Block;
 
-public abstract class Instruction {
+public abstract class Expression {
 
     public abstract int evaluate(Block parent, Instructions.Instruction caller) throws MacchiatoException;
 
@@ -18,43 +18,43 @@ public abstract class Instruction {
         return Integer.MAX_VALUE;
     }
 
-    public Instruction multiply(Instruction other) {
+    public Expression multiply(Expression other) {
         return other.multiplyHelper(this);
     }
 
-    protected Instruction multiplyHelper(Instruction other) {
+    protected Expression multiplyHelper(Expression other) {
         return new Multiply(other, this);
     }
 
-    public Instruction add(Instruction other) {
+    public Expression add(Expression other) {
         return other.addHelper(this);
     }
 
-    protected Instruction addHelper(Instruction other) {
+    protected Expression addHelper(Expression other) {
         return new Add(other, this);
     }
 
-    public Instruction sub(Instruction other) {
+    public Expression sub(Expression other) {
         return other.subHelper(this);
     }
 
-    protected Instruction subHelper(Instruction other) {
+    protected Expression subHelper(Expression other) {
         return new Sub(other, this);
     }
 
-    public Instruction div(Instruction other) {
+    public Expression div(Expression other) {
         return other.divHelper(this);
     }
 
-    protected Instruction divHelper(Instruction other) {
+    protected Expression divHelper(Expression other) {
         return new Div(other, this);
     }
 
-    public Instruction mod(Instruction other) {
+    public Expression mod(Expression other) {
         return other.modHelper(this);
     }
 
-    protected Instruction modHelper(Instruction other) {
+    protected Expression modHelper(Expression other) {
         return new Modulo(other, this);
     }
 }

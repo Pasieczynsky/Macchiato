@@ -5,7 +5,7 @@ import Instructions.Block;
 
 public class Modulo extends Operator {
 
-    protected Modulo(Instruction left, Instruction right) {
+    protected Modulo(Expression left, Expression right) {
         super(left, right);
     }
 

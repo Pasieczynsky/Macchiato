@@ -3,11 +3,10 @@ package Expressions;
 import Exceptions.MacchiatoException;
 import Exceptions.UndeclaredVariableException;
 import Instructions.Block;
-import Instructions.BlockInstruction;
 
 import java.util.Map;
 
-public class Variable extends Instruction {
+public class Variable extends Expression {
     private final char name;
 
     public Variable(char name) {

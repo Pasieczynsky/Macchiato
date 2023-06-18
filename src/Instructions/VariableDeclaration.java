@@ -4,15 +4,15 @@ import java.util.Map;
 
 import Exceptions.MacchiatoException;
 import Exceptions.VariableRedeclarationException;
-import Expressions.Instruction;
+import Expressions.Expression;
 
 public class VariableDeclaration implements Instructions.Instruction {
     private final char variable;
-    private final Instruction instruction;
+    private final Expression expression;
 
-    public VariableDeclaration(char variable, Instruction instruction) {
+    public VariableDeclaration(char variable, Expression expression) {
         this.variable = variable;
-        this.instruction = instruction;
+        this.expression = expression;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class VariableDeclaration implements Instructions.Instruction {
         if (variables.containsKey(variable)) {
             throw new VariableRedeclarationException("\n " + this + "\n" + parent.variablesToString(0));
         }
-        int value = instruction.evaluate(parent, this);
+        int value = expression.evaluate(parent, this);
         variables.put(variable, value);
     }
 
@@ -42,7 +42,7 @@ public class VariableDeclaration implements Instructions.Instruction {
     }
     @Override
     public String toString() {
-        return ("var " + variable + " = " + instruction.toString());
+        return ("var " + variable + " = " + expression.toString());
     }
     protected Character getVariable() {
         return variable;

@@ -5,7 +5,7 @@ import Instructions.Block;
 
 public class Multiply extends Operator {
 
-    protected Multiply(Instruction left, Instruction right) {
+    protected Multiply(Expression left, Expression right) {
         super(left, right);
     }
 

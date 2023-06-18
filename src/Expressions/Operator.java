@@ -1,11 +1,11 @@
 package Expressions;
 
-public abstract class Operator extends Instruction {
+public abstract class Operator extends Expression {
 
-    protected final Instruction left;
-    protected final Instruction right;
+    protected final Expression left;
+    protected final Expression right;
 
-    protected Operator(Instruction left, Instruction right) {
+    protected Operator(Expression left, Expression right) {
         this.left = left;
         this.right = right;
     }

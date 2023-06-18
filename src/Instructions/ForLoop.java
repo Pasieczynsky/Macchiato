@@ -2,31 +2,35 @@ package Instructions;
 
 import Exceptions.MacchiatoException;
 import Expressions.Constant;
-import Expressions.Instruction;
+import Expressions.Expression;
+
+import java.util.ArrayList;
 
 public class ForLoop implements Instructions.Instruction {
-    private final char variable;
-    private final Instruction instruction;
-    private final Instructions.Instruction[] instructions;
+    private char variable;
+    private Expressions.Expression expression;
+    private ArrayList<Instruction> instructions;
     private int instructionIndex = 0;
     private int iterations = 0;
     private int loopCounter = 0;
     private Instructions.Instruction overwritingVariable;
 
-    public ForLoop(char variable, Instruction instruction, Instructions.Instruction[] instructions) {
+    public ForLoop(char variable, Expression expression, ArrayList<Instruction> instructions) {
         this.variable = variable;
-        this.instruction = instruction;
+        this.expression = expression;
         this.instructions = instructions;
     }
 
     @Override
     public void execute(Block parent) throws MacchiatoException {
-        int iterations = instruction.evaluate(parent, this);
+        int iterations = expression.evaluate(parent, this);
         if (iterations <= 0) {
             return;
         }
         for (int i = 0; i < iterations; i++) {
-            BlockInstruction forLoop = new BlockInstruction(new VariableDeclaration[]{(new VariableDeclaration(variable, Constant.create(i)))}, instructions);
+            ArrayList<VariableDeclaration> variableDeclaration = new ArrayList<VariableDeclaration>();
+            variableDeclaration.add(new VariableDeclaration(variable, Constant.create(i)));
+            BlockInstruction forLoop = new BlockInstruction(variableDeclaration, instructions);
             forLoop.execute(parent);
         }
     }
@@ -36,11 +40,11 @@ public class ForLoop implements Instructions.Instruction {
         if (iterations == 0) {
             return forInitialization(parent);
         }
-        if (instructionIndex < instructions.length) {
-            if (instructions[instructionIndex].nextInstructionExecute(parent)) {
+        if (instructionIndex < instructions.size()) {
+            if (instructions.get(instructionIndex).nextInstructionExecute(parent)) {
                 instructionIndex++;
             }
-            if (instructionIndex == instructions.length) { //end of loop
+            if (instructionIndex == instructions.size()) { //end of loop
                 instructionIndex = 0;
                 loopCounter++;
                 if (loopCounter == iterations) { //end of for
@@ -58,7 +62,7 @@ public class ForLoop implements Instructions.Instruction {
     }
 
     private Boolean forInitialization(Block parent) throws MacchiatoException {
-        iterations = instruction.evaluate(parent, this);
+        iterations = expression.evaluate(parent, this);
         if (iterations <= 0) {
             return true;
         }
@@ -74,11 +78,11 @@ public class ForLoop implements Instructions.Instruction {
     @Override
     public void printNextInstruction(Block parent) {
         if (iterations == 0) {
-            System.out.println("for " + variable + " in " + instruction.toString() + "{");
+            System.out.println("for " + variable + " in " + expression.toString() + "{");
             return;
         }
-        if (instructionIndex < instructions.length) {
-            instructions[instructionIndex].printNextInstruction(parent);
+        if (instructionIndex < instructions.size()) {
+            instructions.get(instructionIndex).printNextInstruction(parent);
         }
     }
 
@@ -88,8 +92,8 @@ public class ForLoop implements Instructions.Instruction {
             parent.printVariables(depth);
             return;
         }
-        if (instructionIndex < instructions.length) {
-            instructions[instructionIndex].display(parent, depth);
+        if (instructionIndex < instructions.size()) {
+            instructions.get(instructionIndex).display(parent, depth);
         }
     }
 

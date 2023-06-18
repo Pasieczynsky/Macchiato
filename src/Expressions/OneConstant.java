@@ -10,12 +10,12 @@ public class OneConstant extends Constant {
     }
 
     @Override
-    public Instruction multiply(Instruction other) {
+    public Expression multiply(Expression other) {
         return other;
     }
 
     @Override
-    protected Instruction multiplyHelper(Instruction other) {
+    protected Expression multiplyHelper(Expression other) {
         return other;
     }
 

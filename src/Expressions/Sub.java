@@ -5,7 +5,7 @@ import Instructions.Block;
 
 public class Sub extends Operator {
 
-    protected Sub(Instruction left, Instruction right) {
+    protected Sub(Expression left, Expression right) {
         super(left, right);
     }
 

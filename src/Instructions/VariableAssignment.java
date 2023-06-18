@@ -2,17 +2,17 @@ package Instructions;
 
 import Exceptions.MacchiatoException;
 import Exceptions.UndeclaredVariableException;
-import Expressions.Instruction;
+import Expressions.Expression;
 
 import java.util.Map;
 
 public class VariableAssignment implements Instructions.Instruction {
     private final char variable;
-    private final Instruction instruction;
+    private final Expression expression;
 
-    public VariableAssignment(char variable, Instruction instruction) {
+    public VariableAssignment(char variable, Expression expression) {
         this.variable = variable;
-        this.instruction = instruction;
+        this.expression = expression;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class VariableAssignment implements Instructions.Instruction {
         if(tmp == null){
             throw new UndeclaredVariableException("\n " + this + "\n " + parent.variablesToString(0));
         }
-        int value = instruction.evaluate(parent, this);
+        int value = expression.evaluate(parent, this);
         variables.replace(variable, value);
     }
 
@@ -45,7 +45,7 @@ public class VariableAssignment implements Instructions.Instruction {
 
     @Override
     public String toString() {
-        return (variable + " := " + instruction.toString());
+        return (variable + " := " + expression.toString());
     }
     @Override
     public void display(Block parent, int depth) {

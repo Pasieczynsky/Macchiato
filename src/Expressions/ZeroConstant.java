@@ -10,22 +10,22 @@ public class ZeroConstant extends Constant {
     }
 
     @Override
-    public Instruction multiply(Instruction other) {
+    public Expression multiply(Expression other) {
         return instance;
     }
 
     @Override
-    protected Instruction multiplyHelper(Instruction other) {
+    protected Expression multiplyHelper(Expression other) {
         return instance;
     }
 
     @Override
-    public Instruction add(Instruction other) {
+    public Expression add(Expression other) {
         return other;
     }
 
     @Override
-    protected Instruction addHelper(Instruction other) {
+    protected Expression addHelper(Expression other) {
         return other;
     }
 }

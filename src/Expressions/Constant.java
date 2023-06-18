@@ -2,7 +2,7 @@ package Expressions;
 
 import Instructions.Block;
 
-public class Constant extends Instruction {
+public class Constant extends Expression {
 
     private final int value;
 

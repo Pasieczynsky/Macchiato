@@ -10,8 +10,8 @@ import java.util.Map;
 
 public abstract class Block implements Instruction{
 
-    private final VariableDeclaration[] variableDeclarations;
-    private final Instruction[] instructions;
+    private final ArrayList<VariableDeclaration> variableDeclarations;
+    private final ArrayList<Instruction> instructions;
     private ArrayList<ProcedureDeclaration> procedures = new ArrayList<>();
     private final Map<Character, Integer> variables = new HashMap<>();
     private Block parent;
@@ -19,7 +19,7 @@ public abstract class Block implements Instruction{
     private int instructionIndex = 0;
 
 
-    public Block(VariableDeclaration[] variableDeclarations, Instruction[] instructions) {
+    public Block(ArrayList<VariableDeclaration> variableDeclarations, ArrayList<Instruction> instructions) {
         this.variableDeclarations = variableDeclarations;
         this.instructions = instructions;
     }
@@ -57,14 +57,14 @@ public abstract class Block implements Instruction{
             variableDeclarationIndex++;
             return false;
         }
-        if (variableDeclarationIndex < variableDeclarations.length) {
-            variableDeclarations[variableDeclarationIndex].nextInstructionExecute(this);
+        if (variableDeclarationIndex < variableDeclarations.size()) {
+            variableDeclarations.get(variableDeclarationIndex).nextInstructionExecute(this);
             variableDeclarationIndex++;
-        } else if (instructionIndex < instructions.length && instructions[instructionIndex].nextInstructionExecute(this)) {
+        } else if (instructionIndex < instructions.size() && instructions.get(instructionIndex).nextInstructionExecute(this)) {
             instructionIndex++;
             return false;
         }
-        if (instructionIndex == instructions.length) {
+        if (instructionIndex == instructions.size()) {
             endBlock();
             return true;
         }
@@ -73,12 +73,12 @@ public abstract class Block implements Instruction{
     private Boolean nextIntstructionProcedure(Block parent) throws MacchiatoException{
         if(parent != this.parent)
             setParent(parent);
-        if(variableDeclarationIndex + 1< variableDeclarations.length){
-            variableDeclarations[variableDeclarationIndex + 1].nextInstructionExecute(this);
+        if(variableDeclarationIndex + 1< variableDeclarations.size()){
+            variableDeclarations.get(variableDeclarationIndex + 1).nextInstructionExecute(this);
             variableDeclarationIndex++;
-        }else if(instructionIndex < instructions.length && instructions[instructionIndex].nextInstructionExecute(this)){
+        }else if(instructionIndex < instructions.size() && instructions.get(instructionIndex).nextInstructionExecute(this)){
             instructionIndex++;
-            if(instructionIndex == instructions.length){
+            if(instructionIndex == instructions.size()){
                 endBlock();
                 return true;
             }
@@ -106,11 +106,11 @@ public abstract class Block implements Instruction{
     }
 
     private void printNextInstructionProcedure(Block parent) {
-        if (variableDeclarationIndex + 1< variableDeclarations.length ) {
-            variableDeclarations[variableDeclarationIndex + 1].printNextInstruction(this);
+        if (variableDeclarationIndex + 1< variableDeclarations.size() ) {
+            variableDeclarations.get(variableDeclarationIndex + 1).printNextInstruction(this);
         } else {
-            if (instructionIndex < instructions.length) {
-                instructions[instructionIndex].printNextInstruction(this);
+            if (instructionIndex < instructions.size()) {
+                instructions.get(instructionIndex).printNextInstruction(this);
             }
         }
     }
@@ -120,11 +120,11 @@ public abstract class Block implements Instruction{
             System.out.println("Begin block");
             return;
         }
-        if (variableDeclarationIndex < variableDeclarations.length) {
-            variableDeclarations[variableDeclarationIndex].printNextInstruction(this);
+        if (variableDeclarationIndex < variableDeclarations.size()) {
+            variableDeclarations.get(variableDeclarationIndex).printNextInstruction(this);
         } else {
-            if (instructionIndex < instructions.length) {
-                instructions[instructionIndex].printNextInstruction(this);
+            if (instructionIndex < instructions.size()) {
+                instructions.get(instructionIndex).printNextInstruction(this);
             } else {
                 System.out.println("End block");
             }
@@ -138,11 +138,11 @@ public abstract class Block implements Instruction{
             parent.printVariables(depth);
             return;
         }
-        if (variableDeclarationIndex < variableDeclarations.length) {
-            variableDeclarations[variableDeclarationIndex].display(this, depth);
+        if (variableDeclarationIndex < variableDeclarations.size()) {
+            variableDeclarations.get(variableDeclarationIndex).display(this, depth);
         } else {
-            if (instructionIndex < instructions.length) {
-                instructions[instructionIndex].display(this, depth);
+            if (instructionIndex < instructions.size()) {
+                instructions.get(instructionIndex).display(this, depth);
             } else {
                 printVariables(depth);
             }
@@ -161,7 +161,6 @@ public abstract class Block implements Instruction{
     public void printVariables(int depth) {
         System.out.println(variablesToString(depth));
     }
-//to trzeba przerobic zeby depth liczyl sie tylko dla Block
     public String variablesToString(int depth) {
         Block tmp = this;
         while (tmp != null && depth > 0) {
@@ -232,4 +231,11 @@ public abstract class Block implements Instruction{
         return baos.toString();
     }
 
+    public void addVariableDeclaration(VariableDeclaration variableDeclaration) {
+        variableDeclarations.add(variableDeclaration);
+    }
+
+    public void addInstruction(Instruction instruction) {
+        instructions.add(instruction);
+    }
 }
