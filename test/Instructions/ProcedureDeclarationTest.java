@@ -44,8 +44,10 @@ class ProcedureDeclarationTest {
                 )
                 .build();
         program.run();
-        assertEquals("Exception: Exceptions.ProcedureRedeclarationException: Procedure: out (b)\n" +
-                "{x=1}\r\n", outContent.toString());
+        assertEquals("""
+                Exception: Exceptions.ProcedureRedeclarationException: Procedure: out (b)
+                {x=1}\r
+                """, outContent.toString());
     }
 
 }

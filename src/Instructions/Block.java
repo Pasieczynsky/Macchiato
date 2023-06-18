@@ -12,7 +12,7 @@ public abstract class Block implements Instruction{
 
     private final ArrayList<VariableDeclaration> variableDeclarations;
     private final ArrayList<Instruction> instructions;
-    private ArrayList<ProcedureDeclaration> procedures = new ArrayList<>();
+    private final ArrayList<ProcedureDeclaration> procedures = new ArrayList<>();
     private final Map<Character, Integer> variables = new HashMap<>();
     private Block parent;
     private int variableDeclarationIndex = -1;
@@ -50,7 +50,7 @@ public abstract class Block implements Instruction{
     @Override
     public Boolean nextInstructionExecute(Block parent) throws MacchiatoException {
         if(this instanceof ProcedureBlock)
-            return nextIntstructionProcedure(parent);
+            return nextInstructionProcedure(parent);
         if (parent != this.parent)
             setParent(parent);
         if (variableDeclarationIndex == -1) {
@@ -70,7 +70,7 @@ public abstract class Block implements Instruction{
         }
         return false;
     }
-    private Boolean nextIntstructionProcedure(Block parent) throws MacchiatoException{
+    private Boolean nextInstructionProcedure(Block parent) throws MacchiatoException{
         if(parent != this.parent)
             setParent(parent);
         if(variableDeclarationIndex + 1< variableDeclarations.size()){
@@ -131,8 +131,7 @@ public abstract class Block implements Instruction{
         }
     }
 
-//rozne dla roznych blokow
-//    @Override
+    @Override
     public void display(Block parent, int depth) {
         if (variableDeclarationIndex == -1) {
             parent.printVariables(depth);
@@ -164,7 +163,7 @@ public abstract class Block implements Instruction{
     public String variablesToString(int depth) {
         Block tmp = this;
         while (tmp != null && depth > 0) {
-            //szukamy najblizszego bloku ktorzy nie jest procedura
+            //szukamy najblizszego bloku ktory nie jest procedura
             while(tmp instanceof ProcedureBlock){
                 tmp = tmp.getParent();
             }

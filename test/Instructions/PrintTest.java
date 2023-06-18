@@ -37,7 +37,10 @@ class PrintTest {
                 .print(new Variable('x'))
                 .build();
         program.run();
-        assertEquals("1\r\n" + "x = 1\r\n", outContent.toString());
+        assertEquals("""
+                1\r
+                x = 1\r
+                """, outContent.toString());
     }
 
 }

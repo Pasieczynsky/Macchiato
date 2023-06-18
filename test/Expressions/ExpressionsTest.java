@@ -36,7 +36,10 @@ public class ExpressionsTest {
                 .print(new Variable('x').add(Constant.create(5)))
                 .build();
         program.run();
-        assertEquals("6\r\n" + "x = 1\r\n", outContent.toString());
+        assertEquals("""
+                6\r
+                x = 1\r
+                """, outContent.toString());
     }
     @Test
     public void testConstant() {
@@ -53,7 +56,10 @@ public class ExpressionsTest {
                 .print(new Variable('x').div(Constant.create(5)))
                 .build();
         program.run();
-        assertEquals("2\r\n" + "x = 10\r\n", outContent.toString());
+        assertEquals("""
+                2\r
+                x = 10\r
+                """, outContent.toString());
     }
     @Test
     public void testMod(){
@@ -62,7 +68,10 @@ public class ExpressionsTest {
                 .print(new Variable('x').mod(Constant.create(5)))
                 .build();
         program.run();
-        assertEquals("0\r\n" + "x = 10\r\n", outContent.toString());
+        assertEquals("""
+                0\r
+                x = 10\r
+                """, outContent.toString());
     }
     @Test
     public void testMul() {
@@ -71,7 +80,10 @@ public class ExpressionsTest {
                 .print(new Variable('x').multiply(Constant.create(5)))
                 .build();
         program.run();
-        assertEquals("50\r\n" + "x = 10\r\n", outContent.toString());
+        assertEquals("""
+                50\r
+                x = 10\r
+                """, outContent.toString());
     }
     @Test
     public void testSub() {
@@ -80,7 +92,10 @@ public class ExpressionsTest {
                 .print(new Variable('x').sub(Constant.create(5)))
                 .build();
         program.run();
-        assertEquals("5\r\n" + "x = 10\r\n", outContent.toString());
+        assertEquals("""
+                5\r
+                x = 10\r
+                """, outContent.toString());
     }
     @Test
     public void testVariable() {
@@ -89,6 +104,9 @@ public class ExpressionsTest {
                 .declareVariable('y', new Variable('x'))
                 .build();
         program.run();
-        assertEquals("x = 1\r\n" + "y = 1\r\n", outContent.toString());
+        assertEquals("""
+                x = 1\r
+                y = 1\r
+                """, outContent.toString());
     }
 }

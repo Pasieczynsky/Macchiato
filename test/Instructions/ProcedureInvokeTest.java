@@ -31,6 +31,7 @@ class ProcedureInvokeTest {
         System.setOut(originalOut);
         System.setErr(originalErr);
     }
+
     @Test
     public void testProcedureDeclaration() {
         Macchiato program = new ProgramBuilder()
@@ -43,7 +44,11 @@ class ProcedureInvokeTest {
                 .invoke("out", new Expression[]{new Variable('y')})
                 .build();
         program.run();
-        assertEquals("100\r\n" + "x = 99\r\n" + "y = 1\r\n", outContent.toString());
+        assertEquals("""
+                100\r
+                x = 99\r
+                y = 1\r
+                """, outContent.toString());
     }
 
 }

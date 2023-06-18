@@ -45,7 +45,11 @@ class IfStatementTest {
                 )
                 .build();
         program.run();
-        assertEquals("2\r\n" + "x = 5\r\n" + "y = 3\r\n", outContent.toString());
+        assertEquals("""
+                2\r
+                x = 5\r
+                y = 3\r
+                """, outContent.toString());
     }
     @Test
     public void testIfStatementEquals() {
@@ -62,7 +66,11 @@ class IfStatementTest {
                 )
                 .build();
         program.run();
-        assertEquals("6\r\n" + "x = 3\r\n" + "y = 3\r\n", outContent.toString());
+        assertEquals("""
+                6\r
+                x = 3\r
+                y = 3\r
+                """, outContent.toString());
     }
     @Test
     public void testIfStatementLess() {
@@ -79,7 +87,11 @@ class IfStatementTest {
                 )
                 .build();
         program.run();
-        assertEquals("7\r\n" + "x = 2\r\n" + "y = 5\r\n", outContent.toString());
+        assertEquals("""
+                7\r
+                x = 2\r
+                y = 5\r
+                """, outContent.toString());
     }
     @Test
     public void testIfStatementNotLess() {
@@ -96,7 +108,11 @@ class IfStatementTest {
                 )
                 .build();
         program.run();
-        assertEquals("0\r\n" + "x = 5\r\n" + "y = 5\r\n", outContent.toString());
+        assertEquals("""
+                0\r
+                x = 5\r
+                y = 5\r
+                """, outContent.toString());
     }
     @Test
     public void testIfStatementGreater() {
@@ -113,7 +129,11 @@ class IfStatementTest {
                 )
                 .build();
         program.run();
-        assertEquals("9\r\n" + "x = 6\r\n" + "y = 3\r\n", outContent.toString());
+        assertEquals("""
+                9\r
+                x = 6\r
+                y = 3\r
+                """, outContent.toString());
     }
     @Test
     public void testIfStatementNotGreater() {
@@ -130,7 +150,11 @@ class IfStatementTest {
                 )
                 .build();
         program.run();
-        assertEquals("-6\r\n" + "x = 6\r\n" + "y = 12\r\n", outContent.toString());
+        assertEquals("""
+                -6\r
+                x = 6\r
+                y = 12\r
+                """, outContent.toString());
     }
     @Test
     public void testIfStatementGreaterOrEqual() {
@@ -147,7 +171,11 @@ class IfStatementTest {
                 )
                 .build();
         program.run();
-        assertEquals("12\r\n" + "x = 6\r\n" + "y = 6\r\n", outContent.toString());
+        assertEquals("""
+                12\r
+                x = 6\r
+                y = 6\r
+                """, outContent.toString());
     }
     @Test
     public void testIfStatementNotGreaterOrEqual() {
@@ -164,7 +192,11 @@ class IfStatementTest {
                 )
                 .build();
         program.run();
-        assertEquals("-1\r\n" + "x = 6\r\n" + "y = 7\r\n", outContent.toString());
+        assertEquals("""
+                -1\r
+                x = 6\r
+                y = 7\r
+                """, outContent.toString());
     }
     @Test
     public void testIfStatementLessOrEqual() {
@@ -181,7 +213,11 @@ class IfStatementTest {
                 )
                 .build();
         program.run();
-        assertEquals("12\r\n" + "x = 6\r\n" + "y = 6\r\n", outContent.toString());
+        assertEquals("""
+                12\r
+                x = 6\r
+                y = 6\r
+                """, outContent.toString());
     }
     @Test
     public void testIfStatementNotLessOrEqual() {
@@ -198,6 +234,10 @@ class IfStatementTest {
                 )
                 .build();
         program.run();
-        assertEquals("1\r\n" + "x = 7\r\n" + "y = 6\r\n", outContent.toString());
+        assertEquals("""
+                1\r
+                x = 7\r
+                y = 6\r
+                """, outContent.toString());
     }
 }

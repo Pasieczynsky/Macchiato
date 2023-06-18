@@ -2,9 +2,7 @@ package Instructions;
 
 import Exceptions.MacchiatoException;
 import Exceptions.ProcedureRedeclarationException;
-import Exceptions.VariableRedeclarationException;
 
-import java.util.Map;
 
 public class ProcedureDeclaration implements Instruction{
     private final String name;
@@ -19,12 +17,6 @@ public class ProcedureDeclaration implements Instruction{
 
     @Override
     public void execute(Block parent) throws MacchiatoException {
-//        Map<Character, Integer> variables = parent.getVariables();
-//        if (variables.containsKey(variable)) {
-//            throw new VariableRedeclarationException("\n " + this + "\n" + parent.variablesToString(0));
-//        }
-//        int value = expression.evaluate(parent, this);
-//        variables.put(variable, value);
         for(ProcedureDeclaration procedureDeclaration : parent.getProcedures()){
             if(procedureDeclaration.getProcedureName().equals(name)){
                 throw new ProcedureRedeclarationException(this + "\n" + parent.variablesToString(0));
@@ -47,7 +39,6 @@ public class ProcedureDeclaration implements Instruction{
         System.out.println("Proc " + name + " (" + params  + ")" );
     }
     private String getParametersString(){
-        //Zamień parameters na String oddzielając przecinkami
         StringBuilder params = new StringBuilder();
         for (int i = 0; i < parameters.length; i++) {
             params.append(parameters[i]);

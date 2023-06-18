@@ -45,13 +45,6 @@ public class Debugger {
                     System.out.println("Exit");
                     working = false;
                 }
-//                Debugger dla Macchiato w wersji 1.1 zawiera wsparcie dla nowego polecenia dump,
-//                umożliwiającego wykonanie zrzutu pamięci programu do pliku.
-//                Polecenie to ma symbol m i wymaga jednego parametru będącego ścieżką do pliku.
-//                Efektem działania polecenia powinno być zapisanie w podanym pliku w formie tekstowej zrzutu pamięci programu.
-//                Na zrzut pamięci programu składają się:
-//                  widoczne deklaracje procedur, to jest ich nazwy wraz z nazwami parametrów (bez treści),
-//                  bieżące wartościowanie zmiennych (takie jak w poleceniu d 0).
                 case "m" -> {
                     String path = scanner.next();
                     System.out.println("Dump " + path);

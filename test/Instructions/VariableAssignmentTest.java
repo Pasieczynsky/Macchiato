@@ -31,6 +31,7 @@ class VariableAssignmentTest {
         System.setOut(originalOut);
         System.setErr(originalErr);
     }
+
     @Test
     public void testVariableAssignment() {
         Macchiato program = new ProgramBuilder()
@@ -40,8 +41,13 @@ class VariableAssignmentTest {
                 .print(new Variable('x'))
                 .build();
         program.run();
-        assertEquals("1\r\n" + "x = 1\r\n" + "y = 1\r\n", outContent.toString());
+        assertEquals("""
+                1\r
+                x = 1\r
+                y = 1\r
+                """, outContent.toString());
     }
+
     @Test
     public void testUndeclaredVariableAssignment() {
         Macchiato program = new ProgramBuilder()

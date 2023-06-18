@@ -1,7 +1,6 @@
 package Instructions;
 
 import Expressions.Constant;
-import Expressions.Variable;
 import Macchiato.Macchiato;
 import ProgramBuilder.ProgramBuilder;
 import org.junit.jupiter.api.AfterEach;

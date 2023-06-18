@@ -4,8 +4,6 @@ import Expressions.Constant;
 import Expressions.Variable;
 import Macchiato.Macchiato;
 import ProgramBuilder.*;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +41,10 @@ class BlockInstructionTest {
                 )
                 .build();
         program.run();
-        assertEquals("3\r\n" + "x = 1\r\n", outContent.toString());
+        assertEquals("""
+                3\r
+                x = 1\r
+                """, outContent.toString());
     }
 
 }
