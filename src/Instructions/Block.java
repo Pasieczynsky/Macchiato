@@ -182,6 +182,9 @@ public abstract class Block implements Instruction{
         }
         return variablesToPrint.toString();
     }
+    public ArrayList<ProcedureDeclaration> getProcedures() {
+        return procedures;
+    }
 
     public ProcedureDeclaration getProcedure(String procedureName) throws UndeclaredProcedureException {
         for (ProcedureDeclaration procedureDeclaration : procedures) {

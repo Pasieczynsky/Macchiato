@@ -19,6 +19,9 @@ public class Variable extends Expression {
         Block tmp;
         for (tmp = parent; tmp != null && !variables.containsKey(this.name); variables = tmp.getVariables()) {
             tmp = tmp.getParent();
+            if(tmp == null){
+                break;
+            }
         }
         if (tmp == null) {
             throw new UndeclaredVariableException("\n " + caller + "\n " + parent.variablesToString(0));

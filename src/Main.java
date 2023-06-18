@@ -250,6 +250,7 @@ public class Main {
                         .build()
                 )
                 .build();
-        main.run();
+        main.debug();
+
     }
 }

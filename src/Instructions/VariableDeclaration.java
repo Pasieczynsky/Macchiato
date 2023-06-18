@@ -6,7 +6,7 @@ import Exceptions.MacchiatoException;
 import Exceptions.VariableRedeclarationException;
 import Expressions.Expression;
 
-public class VariableDeclaration implements Instructions.Instruction {
+public class VariableDeclaration implements Instruction {
     private final char variable;
     private final Expression expression;
 

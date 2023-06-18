@@ -1,19 +1,18 @@
 package Instructions;
 
 import Exceptions.MacchiatoException;
-import Expressions.Constant;
-import Expressions.Expression;
+import Expressions.*;
 
 import java.util.ArrayList;
 
-public class ForLoop implements Instructions.Instruction {
-    private char variable;
-    private Expressions.Expression expression;
-    private ArrayList<Instruction> instructions;
+public class ForLoop implements Instruction {
+    private final char variable;
+    private final Expression expression;
+    private final ArrayList<Instruction> instructions;
     private int instructionIndex = 0;
     private int iterations = 0;
     private int loopCounter = 0;
-    private Instructions.Instruction overwritingVariable;
+    private Instruction overwritingVariable;
 
     public ForLoop(char variable, Expression expression, ArrayList<Instruction> instructions) {
         this.variable = variable;
@@ -28,7 +27,7 @@ public class ForLoop implements Instructions.Instruction {
             return;
         }
         for (int i = 0; i < iterations; i++) {
-            ArrayList<VariableDeclaration> variableDeclaration = new ArrayList<VariableDeclaration>();
+            ArrayList<VariableDeclaration> variableDeclaration = new ArrayList<>();
             variableDeclaration.add(new VariableDeclaration(variable, Constant.create(i)));
             BlockInstruction forLoop = new BlockInstruction(variableDeclaration, instructions);
             forLoop.execute(parent);

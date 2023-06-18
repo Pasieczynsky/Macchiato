@@ -1,11 +1,15 @@
 package Instructions;
 
 import Exceptions.MacchiatoException;
+import Exceptions.ProcedureRedeclarationException;
+import Exceptions.VariableRedeclarationException;
+
+import java.util.Map;
 
 public class ProcedureDeclaration implements Instruction{
-    private String name;
-    private char [] parameters;
-    private ProcedureBlock definition;
+    private final String name;
+    private final char [] parameters;
+    private final ProcedureBlock definition;
 
     public ProcedureDeclaration(String name, char [] parameters, ProcedureBlock blockInstruction){
         this.name = name;
@@ -15,6 +19,17 @@ public class ProcedureDeclaration implements Instruction{
 
     @Override
     public void execute(Block parent) throws MacchiatoException {
+//        Map<Character, Integer> variables = parent.getVariables();
+//        if (variables.containsKey(variable)) {
+//            throw new VariableRedeclarationException("\n " + this + "\n" + parent.variablesToString(0));
+//        }
+//        int value = expression.evaluate(parent, this);
+//        variables.put(variable, value);
+        for(ProcedureDeclaration procedureDeclaration : parent.getProcedures()){
+            if(procedureDeclaration.getProcedureName().equals(name)){
+                throw new ProcedureRedeclarationException(this + "\n" + parent.variablesToString(0));
+            }
+        }
         parent.addProcedure(this);
     }
     public String getName(){

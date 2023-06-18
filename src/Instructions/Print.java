@@ -1,9 +1,9 @@
 package Instructions;
 
 import Exceptions.MacchiatoException;
-import Expressions.Expression;
+import Expressions.*;
 
-public class Print implements Instructions.Instruction {
+public class Print implements Instruction {
     private final Expression expression;
 
     public Print(Expression expression) {

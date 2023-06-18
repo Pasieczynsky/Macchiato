@@ -6,11 +6,11 @@ import Expressions.Expression;
 import java.util.ArrayList;
 
 public class IfStatement implements Instructions.Instruction {
-    private Expression firstExpression;
-    private Expression secondExpression;
-    private String operator;
-    private ArrayList<Instruction> trueInstructions;
-    private ArrayList<Instruction> falseInstructions;
+    private final Expression firstExpression;
+    private final Expression secondExpression;
+    private final String operator;
+    private final ArrayList<Instruction> trueInstructions;
+    private final ArrayList<Instruction> falseInstructions;
     private ArrayList<Instruction> instructions;
     private int instructionIndex = -1;
 
@@ -42,7 +42,7 @@ public class IfStatement implements Instructions.Instruction {
         int firstValue = firstExpression.evaluate(parent,this );
         int secondValue = secondExpression.evaluate(parent,this );
         boolean condition = switch (operator) {
-            case "=" -> firstValue == secondValue;
+            case "==" -> firstValue == secondValue;
             case "<>" -> firstValue != secondValue;
             case "<" -> firstValue < secondValue;
             case ">" -> firstValue > secondValue;

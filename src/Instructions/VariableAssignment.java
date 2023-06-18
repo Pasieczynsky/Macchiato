@@ -6,7 +6,7 @@ import Expressions.Expression;
 
 import java.util.Map;
 
-public class VariableAssignment implements Instructions.Instruction {
+public class VariableAssignment implements Instruction {
     private final char variable;
     private final Expression expression;
 
@@ -26,7 +26,11 @@ public class VariableAssignment implements Instructions.Instruction {
             }
         }
         if(tmp == null){
-            throw new UndeclaredVariableException("\n " + this + "\n " + parent.variablesToString(0));
+            String variablesToException = "";
+            if(parent != null){
+                variablesToException = parent.variablesToString(0);
+            }
+            throw new UndeclaredVariableException("\n " + this + "\n " + variablesToException);
         }
         int value = expression.evaluate(parent, this);
         variables.replace(variable, value);
