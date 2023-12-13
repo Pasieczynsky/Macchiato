@@ -1,92 +1,135 @@
-# po_macchiato
+# Macchiato Lungo
 
+A project simulating the operation of a simple programming language, written for the object-oriented programming course at the University of Warsaw.
 
+## How to start?
 
-## Getting started
+The program offers two modes for execution:
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+1) Run without Debugging:  
+In this mode, the program is executed from beginning to end (unless
+an execution error will occur, but even then we only print a message and finish execution,
+without running the debugger)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+2) Run with Debugging:  
+This mode initiates a pause in the program's execution before the first instruction is executed. During this pause, the program awaits commands from the standard input.
 
-## Add your files
+## Debugger commands
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Set of debugger commands:
 
+- c(ontinue):  
+Parameterless command, resumes the debugging process. If the program has already completed, the command prints an appropriate message and does nothing else.
+- s(tep) \<number>  
+Debugger makes exactly \<number> steps. Each step corresponds to the execution of a single instruction (including the execution of all nested component instructions). After executing the specified number of steps, the debugger prints the instruction (possibly complex) that is to be executed next. If the execution reaches the end of the program before completing the specified number of instructions, only an appropriate message is printed, and the program ends normally.
+- d(isplay) \<number>  
+Displays the current valuation. The parameter indicates how many levels higher in the block hierarchy the valuation of variables should be displayed. The command d 0 signifies displaying the current valuation. If the given number is greater than the level of nesting of the current program instruction, only an appropriate message is printed.
+- e(xit)  
+Terminates the execution of the program and concludes the debugger's operation. The final valuation of variables is not printed.
+- m(emory dump) \<file path>  
+Creates a memory dump of the program and saves it to the specified file path. The memory dump includes visible procedure declarations (names and parameter names) and the current valuation of variables, similar to the d 0 command.
+
+## Programs may contain the following instructions
+
+- Block:  
+A block consists of variable declarations and a sequence of instructions. Each of these parts can be empty. Declarations within a block are visible from their declaration point until the end of their block (and nowhere else). Local declarations can override external declarations.
+
+- For Loop \<variable> \<expression> \<instructions>:  
+Executes the instructions \<value times>, and during each iteration, \<instructions> are executed in a block with \<variable> taking successive values from the range 0 to \<value of the expression>-1. The value of the expression is calculated only once, just before the loop starts (so even if the executed instructions change this value, the number of loop iterations and the variable's values at the beginning of each iteration won't change). If the calculated value of the expression is less than or equal to zero, the loop doesn't perform any iterations. An error in the expression calculation interrupts further loop execution (the instructions in the loop are not executed even once).
+
+- Conditional Statement if \<expr1> =|<>|<|>|<=|>= \<expr2> then \<instructions> else \<instructions>:  
+Standard meaning.
+First, we evaluate the first and then the second expression.
+An error in the expression calculation interrupts further execution of this statement.
+The else \<instructions> part can be omitted.
+
+- Assigning a Value to a Variable \<name> \<expr>:  
+Assigns the variable a value equal to the calculated value of the expression.
+An error in the expression calculation interrupts further execution of this instruction (i.e., in such a situation, the variable's value remains unchanged).
+Ends with an error if there is no visible declared variable with the given name at this point in the program.
+
+- Print Expression Value print \<expr>:  
+Evaluates the expression value and then prints it on the standard output in the next line.
+If the expression evaluation fails, this instruction does not print anything.  
+
+Within blocks, the following declarations occur:
+
+- Variable Declaration \<name> \<expr>:  
+Introduces a variable into the current scope of visibility (associated with the block containing this declaration) and initializes it with the calculated value of the expression.  
+In one block, you cannot declare two (or more) variables with the same name.  
+Variable names from different blocks can be the same, and variables may override (instructions and expressions always see the variable declared in the most closely enclosing block).  
+Variables can only be declared at the beginning of a block (i.e., within variable declarations).  
+An error in the expression calculation interrupts further processing of declarations (i.e., in such a situation, the variable is not declared).  
+
+If an error occurs during the execution of an instruction, the program execution is interrupted, and a message containing the values of all variables visible in the block where the error occurred (these variables can be declared in this or surrounding blocks) is printed. Additionally, the instruction directly causing the error is printed.
+
+Macchiato 1.1 introduces procedures, functions without a return value. The declaration includes the name, parameters (of integer type), and the body. Procedures are similar to variables: declarations are at the beginning of the block, visible until its end, can be passed as arguments. It's not allowed to declare two procedures with the same name in one block. Calling a procedure executes its body with dynamic variable binding.
+
+## Expressions in Macchiato
+
+In the Macchiato language, all expressions have integer values. An expression can take one of the following forms:
+
+- Integer Literal:  
+ The value of such an expression is the value of the literal. The syntax and range of literals are the same as in Java for the int type.
+
+- Variable: The value of such an expression is the value of the variable visible at that point in the program. If there is no visible variable with the specified name at that point, the evaluation of the variable's value results in an error.
+
+- Addition \<expr1> \<expr2>:  
+The sum of two expressions. First, we evaluate the first expression, then the second one, and finally, we perform the addition on the obtained values. If the result exceeds the range, the outcome should be the same as Java for equivalent values.
+
+- Subtraction \<expr1> \<expr2>:  
+The difference between two expressions. First, we evaluate the first expression, then the second one, and finally, we subtract the value of the second expression from the value of the first one. If the result exceeds the range, the outcome should be the same as Java for equivalent values.
+
+- Multiplication \<expr1> \<expr2>:  
+The product of two expressions. First, we evaluate the first expression, then the second one, and finally, we multiply the obtained values. If the result exceeds the range, the outcome should be the same as Java for equivalent values.
+
+- Division \<expr1> \<expr2>:  
+Integer division of two expressions. First, we evaluate the first expression, then the second one, and finally, we divide the value of the first expression by the value of the second one. For negative numbers or different signs, the result should be the same as Java for equivalent values. The calculation results in an error when the value of the second expression is zero.
+
+- Modulo \<expr1> \<expr2>:  
+The remainder of the integer division of two expressions. First, we evaluate the first expression, then the second one, and finally, we divide the value of the first expression by the value of the second one, and the result is the remainder. For negative numbers or different signs, the result should be the same as Java for equivalent values. The calculation results in an error when the value of the second expression is zero.
+
+## Convenient Macchiato Program Creation in Java
+
+Macchiato programs in version 1.1 can be created in a much more convenient way than in the previous version. A set of classes that serve as a small SDK for Macchiato provides the ability to create programs and their individual parts in a manner similar to DSL. This allows for sequentially adding declarations and instructions through calls to corresponding methods. Additionally, it enables the creation of expressions using clear, static functions.
+
+Create a program with the following meta syntax:
+
+```java
+beginblock
+     var x 101
+     var y 1
+     proc out
+         print a+x
+     end percentage
+     x := x - y
+     out(x)
+     out(100) // this should print 200
+     beginblock
+         var x 10
+         out(100) // here statically still 200, dynamically 110
+     end block
+end block
 ```
-cd existing_repo
-git remote add origin https://gitlab.mimuw.edu.pl/dp448427/po_macchiato.git
-git branch -M main
-git push -uf origin main
+
+it could go like this, for example:
+
+```java
+Macchiato main = new ProgramBuilder()
+        .declareVariable('x', Constant.create(101))
+        .declareVariable('y', Constant.create(1))
+        .declareProcedure("out", new char[]{'a'}, new ProcedureBlockBuilder()
+                .print(new Variable('a').add(new Variable('x')))
+                .build()
+        )
+        .assignVariable('x', new Variable('x').sub(new Variable('y')))
+        .invoke("out", new Expression[]{new Variable('x'), new Variable('y')})
+        .invoke("out", new Expression[]{Constant.create(100)})
+        .block(new BlockInstructionBuilder()
+                .declareVariable('x', Constant.create(10))
+                .invoke("out", new Expression[]{Constant.create(100)})
+                .build()
+        )
+        .build();
+main.run();
 ```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.mimuw.edu.pl/dp448427/po_macchiato/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
